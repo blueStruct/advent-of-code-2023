@@ -1,7 +1,7 @@
 use std::{error::Error, fs};
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let input: String = fs::read_to_string("src/day3/input")?.parse()?;
+    let input: String = fs::read_to_string("src/day03/input")?.parse()?;
     part1(&input);
     part2(&input);
 

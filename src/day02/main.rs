@@ -2,7 +2,7 @@ use regex::Regex;
 use std::{error::Error, fs};
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let input: String = fs::read_to_string("src/day2/input")?.parse()?;
+    let input: String = fs::read_to_string("src/day02/input")?.parse()?;
     part1(&input)?;
     part2(&input)?;
     Ok(())

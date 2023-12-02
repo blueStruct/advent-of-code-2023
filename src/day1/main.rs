@@ -10,7 +10,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 }
 
 fn part1(input: &str) -> Result<(), Box<dyn Error>> {
-    let calibration_values: Vec<u32> = input
+    let sum: u32 = input
         .lines()
         .map(|line| -> u32 {
             let first_digit = line
@@ -28,9 +28,8 @@ fn part1(input: &str) -> Result<(), Box<dyn Error>> {
             let _ = write!(number, "{}{}", first_digit, last_digit);
             number.parse::<u32>().unwrap()
         })
-        .collect();
+        .sum();
 
-    let sum: u32 = calibration_values.iter().sum();
     println!("{}", sum);
 
     Ok(())
@@ -38,7 +37,8 @@ fn part1(input: &str) -> Result<(), Box<dyn Error>> {
 
 fn part2(input: &str) -> Result<(), Box<dyn Error>> {
     let re = Regex::new(r"[1-9]|one|two|three|four|five|six|seven|eight|nine").unwrap();
-    let calibration_values: Vec<u32> = input
+
+    let sum: u32 = input
         .lines()
         .map(|line| -> u32 {
             let first_digit = re.find(line).unwrap().as_str();
@@ -58,9 +58,8 @@ fn part2(input: &str) -> Result<(), Box<dyn Error>> {
             let _ = write!(number, "{}{}", first_digit_parsed, last_digit_parsed);
             number.parse::<u32>().unwrap()
         })
-        .collect();
+        .sum();
 
-    let sum: u32 = calibration_values.iter().sum();
     println!("{}", sum);
 
     Ok(())

@@ -22,6 +22,7 @@ fn part1(input: &str) -> Result<(), Box<dyn Error>> {
         .enumerate()
         .map(|(i, game)| {
             let cube_sets = game.split(";");
+
             for cube_set in cube_sets {
                 let red = get_number_from_string(&red_re, cube_set);
                 let green = get_number_from_string(&green_re, cube_set);
@@ -30,6 +31,7 @@ fn part1(input: &str) -> Result<(), Box<dyn Error>> {
                     return 0;
                 }
             }
+
             i + 1
         })
         .sum();

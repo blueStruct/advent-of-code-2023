@@ -17,11 +17,13 @@ fn part1(input: &str) -> Result<(), Box<dyn Error>> {
                 .chars()
                 .find(|x| x.is_digit(10))
                 .expect("Could not find first digit");
+
             let last_digit = line
                 .chars()
                 .rev()
                 .find(|x| x.is_digit(10))
                 .expect("Could not find last digit");
+
             let mut number = String::new();
             let _ = write!(number, "{}{}", first_digit, last_digit);
             number.parse::<u32>().unwrap()
@@ -39,21 +41,22 @@ fn part2(input: &str) -> Result<(), Box<dyn Error>> {
     let calibration_values: Vec<u32> = input
         .lines()
         .map(|line| -> u32 {
-            println!();
-            dbg!(line);
-            let mut digits = re.find_iter(line);
-            let first_digit = digits.nth(0).unwrap().as_str();
+            let first_digit = re.find(line).unwrap().as_str();
             let first_digit_parsed = parse_digit(first_digit);
 
-            let last_digit_parsed = if let Some(x) = digits.last() {
-                parse_digit(x.as_str())
-            } else {
-                first_digit_parsed
-            };
+            // finding last digit, have to use ever increasing end string, because regex only finds non-overlapping matches beginning from the start
+            let mut last_digit_parsed = 0;
+            for i in (0..line.len()).rev() {
+                let end_string = &line[i..];
+                if let Some(last_digit) = re.find(end_string) {
+                    last_digit_parsed = parse_digit(last_digit.as_str());
+                    break;
+                };
+            }
 
             let mut number = String::new();
             let _ = write!(number, "{}{}", first_digit_parsed, last_digit_parsed);
-            dbg!(number.parse::<u32>().unwrap())
+            number.parse::<u32>().unwrap()
         })
         .collect();
 

@@ -66,13 +66,6 @@ fn part1(input: &str) -> Result<(), Box<dyn Error>> {
 }
 
 fn part2(input: &str) -> Result<(), Box<dyn Error>> {
-    #[derive(PartialEq, Eq, Hash, Debug)]
-    struct Number {
-        value: u32,
-        x: usize,
-        y: usize,
-    }
-
     let numbers_re = Regex::new(r"\d+").unwrap();
     let gear_re = Regex::new(r"\*").unwrap();
     let mut numbers_vec: Vec<Vec<Match>> = vec![];
@@ -97,7 +90,7 @@ fn part2(input: &str) -> Result<(), Box<dyn Error>> {
             let start_y = gear_y.checked_sub(1).unwrap_or_default(); // not less than 0
             let end_y = usize::min(numbers_vec.len() - 1, gear_y + 1); // not more than numbers_vec.len()
 
-            for (number_y, number_line) in numbers_vec[start_y..=end_y].iter().enumerate() {
+            for number_line in &numbers_vec[start_y..=end_y] {
                 for number in number_line {
                     // check if symbol is close to number in x-direction, y is already filtered to relevant only
                     if gear_x >= number.start().checked_sub(1).unwrap_or_default()

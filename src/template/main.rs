@@ -2,8 +2,8 @@ use std::{error::Error, fs};
 
 fn main() -> Result<(), Box<dyn Error>> {
     let input: String = fs::read_to_string("src/day01/input")?.parse()?;
-    part1(&input);
-    part2(&input);
+    part1(&input)?;
+    part2(&input)?;
 
     Ok(())
 }

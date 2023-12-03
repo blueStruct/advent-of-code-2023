@@ -45,7 +45,7 @@ fn part1(input: &str) -> Result<(), Box<dyn Error>> {
                     // check if symbol is close to number in x-direction, y is already filtered to relevant only
                     if symbol_x >= number.start().checked_sub(1).unwrap_or_default()
                         && symbol_x <= number.end()
-                    // here no +1 because Match.end() is already +1
+                    // here no +1 because Match.end() uses exclusive end of range
                     {
                         relevant_numbers_set.insert(Number {
                             value: number.as_str().parse().unwrap(),

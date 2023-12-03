@@ -44,7 +44,8 @@ fn part1(input: &str) -> Result<(), Box<dyn Error>> {
                 for number in number_line {
                     // check if symbol is close to number in x-direction, y is already filtered to relevant only
                     if symbol_x >= number.start().checked_sub(1).unwrap_or_default()
-                        && symbol_x <= number.end() + 1
+                        && symbol_x <= number.end()
+                    // here no +1 because Match.end() is already +1
                     {
                         relevant_numbers_set.insert(Number {
                             value: number.as_str().parse().unwrap(),
@@ -56,21 +57,9 @@ fn part1(input: &str) -> Result<(), Box<dyn Error>> {
             }
         }
     }
-    let mut test_count = 0;
 
     // calc sum
-    let sum: u32 = relevant_numbers_set
-        .iter()
-        .map(|x| {
-            if x.y == numbers_vec.len() - 1 {
-                dbg!(x.value);
-                test_count += 1;
-            }
-            x.value
-        })
-        .sum();
-
-    dbg!(test_count);
+    let sum: u32 = relevant_numbers_set.iter().map(|x| x.value).sum();
     println!("answer for part 1: {}", sum);
 
     Ok(())

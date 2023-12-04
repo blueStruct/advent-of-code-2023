@@ -69,7 +69,7 @@ fn part2(input: &str) -> Result<(), Box<dyn Error>> {
             .count();
 
         // which of the next cards will receive copies? + avoid index overflow
-        let end_index = usize::min(input.lines().count() - 1, card_nr + count);
+        let end_index = usize::min(instances.len() - 1, card_nr + count);
 
         // how many copies will be added to the next cards?
         let instances_current_card = instances[card_nr];

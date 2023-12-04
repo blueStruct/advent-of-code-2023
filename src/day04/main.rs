@@ -75,8 +75,8 @@ fn part2(input: &str) -> Result<(), Box<dyn Error>> {
         let instances_current_card = instances[card_nr];
 
         // add copies of scratchcards
-        for instance in &mut instances[(card_nr + 1)..=(end_index)] {
-            *instance += instances_current_card;
+        for index in (card_nr + 1)..=(end_index) {
+            instances[index] += instances_current_card;
         }
     }
 

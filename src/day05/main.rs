@@ -1,4 +1,10 @@
-use std::{cmp::Ordering, error::Error, fs, ops::Range, collections::{HashSet, HashMap}};
+use std::{
+    cmp::Ordering,
+    collections::{HashMap, HashSet},
+    error::Error,
+    fs,
+    ops::Range,
+};
 
 use regex::Regex;
 

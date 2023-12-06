@@ -25,3 +25,4 @@ path = "src/day05/main.rs"
 
 [dependencies]
 regex = "1.10.2"
+rand = "0.8.5"

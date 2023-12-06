@@ -166,6 +166,7 @@ fn part2_pso(input: &str) -> Result<(), Box<dyn Error>> {
             let source_start = x[1];
             let range_len = x[2];
             let source_end = source_start + range_len;
+
             map.push(MappingRange {
                 source_range: source_start..source_end,
                 dest_start: x[0],
@@ -244,35 +245,50 @@ fn part2_pso(input: &str) -> Result<(), Box<dyn Error>> {
         // search optimum
         while steps_best_swarm_position_unchanged < 10 {
             for particle in &mut particles {
+                // velocity constants
                 let r_p: f32 = rng.gen();
                 let r_g: f32 = rng.gen();
-                let diff_particle = particle
-                    .best_x
-                    .0
-                    .checked_sub(particle.x)
-                    .unwrap_or_default();
-                let diff_swarm = best_swarm_position
-                    .0
-                    .checked_sub(particle.x)
-                    .unwrap_or_default();
 
-                let new_velocity = (0.5 * particle.v as f32 // inertia
-                    + 1.5 * r_p * (diff_particle) as f32 // towards particle best
-                    + 2.5 * r_g * (diff_swarm) as f32) // towards swarm best
-                    as i64;
-                let mut new_position =
-                    u64::max(seed_range_start, (particle.x as i64 + new_velocity) as u64);
-                new_position = u64::min(seed_range_end - 1, new_position);
+                // movement vector components
+                let diff_particle = particle.best_x.0 as i64 - particle.x as i64;
+                let diff_swarm = best_swarm_position.0 as i64 - particle.x as i64;
 
+                // calc new velocity
+                let new_velocity = (
+                    // inertia
+                    0.5 * particle.v as f32 
+                    // towards particle best
+                    + 1.5 * r_p * diff_particle as f32 
+                    // towards swarm best
+                    + 2.5 * r_g * diff_swarm as f32
+                ) as i64;
+
+                // add velocity to position
+                let mut new_position = (particle.x as i64 + new_velocity) as u64;
+
+                // clamp to seed range
+                new_position = u64::max(
+                    seed_range_start,
+                    new_position
+                );
+                new_position = u64::min(
+                    seed_range_end - 1,
+                    new_position
+                );
+
+                // calc cost
                 let cost_new_position = cost_function(new_position);
 
+                // update particle
                 particle.v = new_velocity;
                 particle.x = new_position;
 
+                // update particle best
                 if cost_new_position < particle.best_x.1 {
                     particle.best_x = (new_position, cost_new_position);
                 }
 
+                // update swarm best
                 if cost_new_position < best_swarm_position.1 {
                     best_swarm_position = (new_position, cost_new_position);
                     steps_best_swarm_position_unchanged = 0;

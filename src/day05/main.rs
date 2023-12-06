@@ -246,15 +246,23 @@ fn part2_pso(input: &str) -> Result<(), Box<dyn Error>> {
             for particle in &mut particles {
                 let r_p: f32 = rng.gen();
                 let r_g: f32 = rng.gen();
-                let diff_particle = particle.best_x.0.checked_sub(particle.x).unwrap_or_default();
-                let diff_swarm = best_swarm_position.0.checked_sub(particle.x).unwrap_or_default();
+                let diff_particle = particle
+                    .best_x
+                    .0
+                    .checked_sub(particle.x)
+                    .unwrap_or_default();
+                let diff_swarm = best_swarm_position
+                    .0
+                    .checked_sub(particle.x)
+                    .unwrap_or_default();
 
                 let new_velocity = (0.5 * particle.v as f32 // inertia
                     + 1.5 * r_p * (diff_particle) as f32 // towards particle best
                     + 2.5 * r_g * (diff_swarm) as f32) // towards swarm best
                     as i64;
-                let mut new_position = u64::max(seed_range_start,(particle.x as i64 + new_velocity) as u64);
-                new_position = u64::min(seed_range_end-1, new_position);
+                let mut new_position =
+                    u64::max(seed_range_start, (particle.x as i64 + new_velocity) as u64);
+                new_position = u64::min(seed_range_end - 1, new_position);
 
                 let cost_new_position = cost_function(new_position);
 
@@ -277,7 +285,7 @@ fn part2_pso(input: &str) -> Result<(), Box<dyn Error>> {
         best_location_per_range.push(best_swarm_position);
     }
 
-    let (best_candidate_pso_seed,  _best_candidate_pso_location) = best_location_per_range
+    let (best_candidate_pso_seed, _best_candidate_pso_location) = best_location_per_range
         .iter()
         .min_by(|x, y| x.1.cmp(&y.1))
         .unwrap();
@@ -288,9 +296,9 @@ fn part2_pso(input: &str) -> Result<(), Box<dyn Error>> {
     let mut best_location = u64::MAX;
 
     for seed in start..end {
-        let location = cost_function(seed); 
+        let location = cost_function(seed);
         best_location = u64::min(location, best_location);
-    } 
+    }
 
     println!("The answer for part 2 is: {}", best_location);
 

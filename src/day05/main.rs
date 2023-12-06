@@ -245,7 +245,7 @@ fn part2_pso(input: &str) -> Result<(), Box<dyn Error>> {
         // search optimum
         while steps_best_swarm_position_unchanged < 10 {
             for particle in &mut particles {
-                // velocity constants
+                // velocity random factors
                 let r_p: f32 = rng.gen();
                 let r_g: f32 = rng.gen();
 

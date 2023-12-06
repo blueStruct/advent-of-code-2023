@@ -306,7 +306,7 @@ fn part2_pso(input: &str) -> Result<(), Box<dyn Error>> {
         .min_by(|x, y| x.1.cmp(&y.1))
         .unwrap();
 
-    // fine search
+    // fine search near pso candidate
     let start = best_candidate_pso_seed - 1_000_000;
     let end = best_candidate_pso_seed + 1_000_000;
     let mut best_location = u64::MAX;
@@ -316,6 +316,7 @@ fn part2_pso(input: &str) -> Result<(), Box<dyn Error>> {
         best_location = u64::min(location, best_location);
     }
 
+    // done
     println!("The answer for part 2 is: {}", best_location);
 
     Ok(())

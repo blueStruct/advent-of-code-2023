@@ -27,6 +27,10 @@ path = "src/day05/main.rs"
 name = "day06"
 path = "src/day06/main.rs"
 
+[[bin]]
+name = "day07"
+path = "src/day07/main.rs"
+
 [dependencies]
 regex = "1.10.2"
 rand = "0.8.5"

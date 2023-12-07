@@ -1,6 +1,6 @@
 # 🎄 Advent of Code 2023 🎄
 
-Aufgabenstellungen
+challenge descriptions:
 
 https://adventofcode.com/2023
 

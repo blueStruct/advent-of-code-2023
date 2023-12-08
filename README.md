@@ -1,6 +1,5 @@
 # 🎄 Advent of Code 2023 🎄
 
-challenge descriptions:
-
+exercise descriptions\
 https://adventofcode.com/2023
 

@@ -59,7 +59,7 @@ fn part1(input: &str) -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-fn part2(input: &str) -> Result<(), Box<dyn Error>> {
+fn part2(input: &str) -> Result<(), Box<dyn Error>> { // TODO: unsolved because of bad performance
     // parse navigation instructions and node map
     let (nav_str, mut node_str) = input.split_once("\n").unwrap();
     node_str = node_str.trim();

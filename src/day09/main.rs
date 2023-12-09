@@ -51,7 +51,7 @@ fn part1(input: &str) -> Result<(), Box<dyn Error>> {
             prev_seq_last_element = new_last_element;
         }
 
-        // add new extrapolated for original sequence to sum
+        // add new extrapolated last value for original sequence to sum
         sum += sequences[0].last().unwrap();
     }
 
@@ -61,5 +61,53 @@ fn part1(input: &str) -> Result<(), Box<dyn Error>> {
 }
 
 fn part2(input: &str) -> Result<(), Box<dyn Error>> {
+    let mut sum = 0;
+
+    // process sequence in each line
+    for line in input.lines() {
+        // parse original sequence
+        let mut sequences: Vec<Vec<i64>> = vec![];
+
+        let original_sequence: Vec<i64> = line
+            .split_whitespace()
+            .map(|x| x.parse().unwrap())
+            .collect();
+
+        sequences.push(original_sequence);
+
+        // generate all difference sequences
+        while sequences.last().unwrap().iter().any(|x| *x != 0) {
+            let last_sequence = sequences.last().unwrap();
+            let first_element = last_sequence[0];
+            let new_sequence = last_sequence[1..]
+                .iter()
+                .scan(first_element, |prev, &x| {
+                    let this = x - *prev;
+                    *prev = x;
+                    Some(this)
+                })
+                .collect();
+            sequences.push(new_sequence);
+        }
+
+        // extrapolate the first values for diff sequences and original sequence
+        let seqs_len = sequences.len();
+        sequences[seqs_len - 1].insert(0, 0);
+
+        let mut prev_seq_first_element = 0;
+
+        for sequence in sequences.iter_mut().rev().skip(1) {
+            let first_element = sequence[0];
+            let new_first_element = first_element - prev_seq_first_element;
+            sequence.insert(0, new_first_element);
+            prev_seq_first_element = new_first_element;
+        }
+
+        // add new extrapolated first value for original sequence to sum
+        sum += sequences[0][0];
+    }
+
+    println!("The answer to part 1 is: {}", sum);
+
     Ok(())
 }

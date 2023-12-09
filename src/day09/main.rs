@@ -107,7 +107,7 @@ fn part2(input: &str) -> Result<(), Box<dyn Error>> {
         sum += sequences[0][0];
     }
 
-    println!("The answer to part 1 is: {}", sum);
+    println!("The answer to part 2 is: {}", sum);
 
     Ok(())
 }

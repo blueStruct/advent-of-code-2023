@@ -1,7 +1,37 @@
+use regex::Regex;
+use reqwest::header::COOKIE;
 use std::{collections::HashSet, error::Error, fs};
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let input: String = fs::read_to_string("src/day11/input")?.parse()?;
+    // get day
+    let bin_name = std::env::args().nth(0).unwrap();
+    let day = Regex::new(r"day(\d+)")
+        .unwrap()
+        .captures(&bin_name)
+        .unwrap()
+        .get(1)
+        .unwrap()
+        .as_str();
+
+    // read cached input from file
+    let file_path = format!("src/day{}/input", day);
+
+    let input = if let Ok(x) = fs::read_to_string(&file_path) {
+        x.trim().to_string()
+    } else {
+        // or get from internet
+        let session_cookie: String = fs::read_to_string("src/session_cookie")?.trim().parse()?;
+        let client = reqwest::blocking::Client::new();
+        let input_text = client
+            .get(format!("https://adventofcode.com/2023/day/{}/input", day))
+            .header(COOKIE, format!("session={}", session_cookie))
+            .send()?
+            .text()?
+            .trim()
+            .to_owned();
+        fs::write(&file_path, &input_text)?;
+        input_text
+    };
     part1and2(&input, 2);
     part1and2(&input, 1_000_000);
 

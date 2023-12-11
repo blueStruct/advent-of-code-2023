@@ -2,13 +2,13 @@ use std::{collections::HashSet, error::Error, fs};
 
 fn main() -> Result<(), Box<dyn Error>> {
     let input: String = fs::read_to_string("src/day11/input")?.parse()?;
-    part1(&input)?;
-    part2(&input)?;
+    part1and2(&input, 2)?;
+    part1and2(&input, 1_000_000)?;
 
     Ok(())
 }
 
-fn part1(input: &str) -> Result<(), Box<dyn Error>> {
+fn part1and2(input: &str, scale_factor: usize) -> Result<(), Box<dyn Error>> {
     let mut galaxies: Vec<(usize, usize)> = vec![];
 
     // parse input, find galaxies
@@ -32,7 +32,7 @@ fn part1(input: &str) -> Result<(), Box<dyn Error>> {
     let cum_sum_empty_lines: Vec<usize> = (0..=*max_y)
         .scan(0, |acc, i| {
             if !non_empty_lines.contains(&i) {
-                *acc += 1;
+                *acc += scale_factor - 1;
             }
             Some(*acc)
         })
@@ -41,7 +41,7 @@ fn part1(input: &str) -> Result<(), Box<dyn Error>> {
     let cum_sum_empty_cols: Vec<usize> = (0..=*max_x)
         .scan(0, |acc, i| {
             if !non_empty_cols.contains(&i) {
-                *acc += 1;
+                *acc += scale_factor - 1;
             }
             Some(*acc)
         })
@@ -63,13 +63,9 @@ fn part1(input: &str) -> Result<(), Box<dyn Error>> {
     }
 
     println!(
-        "The answer to part 1 is: {}",
-        distances.iter().sum::<usize>()
+        "The answer to this part is: {}",
+        distances.iter().map(|x| *x as u128).sum::<u128>()
     );
 
-    Ok(())
-}
-
-fn part2(input: &str) -> Result<(), Box<dyn Error>> {
     Ok(())
 }

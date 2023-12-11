@@ -2,13 +2,13 @@ use std::{collections::HashSet, error::Error, fs};
 
 fn main() -> Result<(), Box<dyn Error>> {
     let input: String = fs::read_to_string("src/day11/input")?.parse()?;
-    part1and2(&input, 2)?;
-    part1and2(&input, 1_000_000)?;
+    part1and2(&input, 2);
+    part1and2(&input, 1_000_000);
 
     Ok(())
 }
 
-fn part1and2(input: &str, scale_factor: usize) -> Result<(), Box<dyn Error>> {
+fn part1and2(input: &str, scale_factor: usize) -> u128 {
     let mut galaxies: Vec<(usize, usize)> = vec![];
 
     // parse input, find galaxies
@@ -62,10 +62,29 @@ fn part1and2(input: &str, scale_factor: usize) -> Result<(), Box<dyn Error>> {
         }
     }
 
-    println!(
-        "The answer to this part is: {}",
-        distances.iter().map(|x| *x as u128).sum::<u128>()
-    );
+    let answer = distances.iter().map(|x| *x as u128).sum::<u128>();
 
-    Ok(())
+    println!("The answer to this part is: {}", answer);
+
+    answer
+}
+
+#[test]
+fn examples() {
+    let example_input = "
+        ...#......
+        .......#..
+        #.........
+        ..........
+        ......#...
+        .#........
+        .........#
+        ..........
+        .......#..
+        #...#.....
+    ";
+
+    assert_eq!(part1and2(example_input, 2), 374);
+    assert_eq!(part1and2(example_input, 10), 1030);
+    assert_eq!(part1and2(example_input, 100), 8410);
 }

@@ -1,3 +1,5 @@
+use regex::Regex;
+use reqwest::header::COOKIE;
 use std::{error::Error, fs};
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -32,30 +34,25 @@ fn main() -> Result<(), Box<dyn Error>> {
     };
 
     // solve problems
-    part1(&input)?;
-    part2(&input)?;
+    part1(&input);
+    // part2(&input);
 
     Ok(())
 }
 
-
 fn part1(input: &str) -> usize {
-    Ok(())
+    3
 }
 
 #[test]
 fn examples() {
     let example_input = "
-        ...#......
-        .......#..
-        #.........
-        ..........
-        ......#...
-        .#........
-        .........#
-        ..........
-        .......#..
-        #...#.....
+        #.#.### 1,1,3
+        .#...#....###. 1,1,3
+        .#.###.#.###### 1,3,1,6
+        ####.#...#... 4,1,1
+        #....######..#####. 1,6,5
+        .###.##....# 3,2,1
     ";
 
     assert_eq!(part1(example_input), 374);

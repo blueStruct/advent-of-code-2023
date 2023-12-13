@@ -21,3 +21,4 @@ Cargo.lock
 # added manually
 session_cookie
 input
+.vscode/settings.json

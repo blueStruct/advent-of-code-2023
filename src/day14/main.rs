@@ -97,6 +97,7 @@ fn part1(input: &str) -> usize {
 
 fn part2(input: &str) -> usize {
     let input = input.trim();
+    const N_CYCLES: usize = 1_000_000_000;
 
     // caching
     let mut cache: IndexSet<Vec<Vec<char>>> = IndexSet::new();
@@ -110,15 +111,15 @@ fn part2(input: &str) -> usize {
     }
 
     // cycles
-    for current_cycle in 0..1_000_000_000 {
+    for current_cycle in 0..N_CYCLES {
         // check if already seen this grid config
         // => done, from now on everything will repeat
         if let Some(cycle_start_repetition) = cache.get_index_of(&grid) {
-            // find repetition length
+            // find repetition length and remaining cycles
             let len_rep = current_cycle - cycle_start_repetition;
+            let rem_cycles = N_CYCLES - current_cycle;
 
             // find final index
-            let rem_cycles = 1_000_000_000 - current_cycle;
             let offset = rem_cycles % len_rep;
             let final_index = cycle_start_repetition + offset;
 

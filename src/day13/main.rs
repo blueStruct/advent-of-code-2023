@@ -51,7 +51,7 @@ fn part1(input: &str) -> usize {
         for (y, line) in pattern.lines().enumerate() {
             let line = line.trim();
 
-            // put line into HashMap to find horizontal reflection line
+            // put line into HashMap to find potential horizontal reflection line
             if let Some(l) = horiz_line_duplicates.get_mut(line) {
                 l.push(y);
             } else {
@@ -84,7 +84,8 @@ fn part1(input: &str) -> usize {
                 .or_insert(2);
         }
 
-        // refine vertical candidates
+        // TODO: filter to candidates that reach to the shorter end of the pattern instead
+        // refine vertical candidates 
         let vertical_candidates = vertical_candidates
             .iter()
             .filter(|x| *x.1 == pattern.lines().count());
